@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>教师在线批改作业</title>
+
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<!--写到这里了现在要做的是写教师改作业。通过学号查。输入框也要有，列表也要有-->
+</head>
+<body>
+
+
+<div >
+    <table id="table" class="table table-hover" >
+        <tr class="row" >
+            <th >学生姓名</th>
+            <th >学生学号</th>
+            <th >作业内容</th>
+        </tr>
+        <tbody id="table-body">
+
+        </tbody>
+    </table>
+</div>
+
+
+<script type="text/javascript">
+    function checkNote() {                    ///course
+        // 请求课程数据
+        $.ajax({
+            type: 'get',   // 请求类型
+            url: 'http://localhost:8080/server/unit_online_studyServlet',  // 请求地址
+            dataType: "text",        // 返回值的数据类型，text表示纯文本
+            data: {// 请求的参数，通过组件的id获取到它的值
+                stuxuehao: $("#stuxuehao").val(),
+            },
+            success: function (data) {     // 访问成功的回调函数，成功后会执行此函数
+                // 把data转成json
+                console.log(data);
+                data = JSON.parse(data);
+                buildcourseTable(data);
+            },
+            error: function(data) {    // 访问错误的处理
+                //alert(data);
+            }
+        });
+    }
+    //滚动创建课程公告表格
+    function buildcourseTable(data) {
+        var html = "";
+        for (var i = 0; i < data.length;i++){
+            html += "<tr class='row'>" +
+                "<td >"+data[i].stuname+"</td>" +
+                "<td >"+data[i].stuxuehao+"</td>" +
+                "<td >"+data[i].homework+"</td>" +
+                "</tr>" ;
+        }
+        // $("#content").empty();
+        $("#table-body").append(html);
+    }
+</script>
+
+<div>
+    <div class="login-form">
+
+        <form action="http://localhost:8080/server/unit_online_studyServlet" method="get">
+            <div class="form-group input">
+                <label for="stuxuehao">学生学号为</label>
+                <input type="text" class="form-control" name="pname" id="stuxuehao" placeholder="学号">
+            </div>
+        </form>
+    </div>
+</div>
+
+<button style="width: 280px;margin-left: 40%;  color: red;background-color: aqua" type="button" class="btn btn-success" onclick="checkNote()">查询该名学生的作业</button>
+
+</body>
+</html>

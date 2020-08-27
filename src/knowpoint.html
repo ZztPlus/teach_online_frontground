@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>知识点检索</title>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+</head>
+<body>
+<div >
+    <table id="table" class="table table-hover" >
+        <tr class="row" >
+            <th >单元名</th>
+            <th >知识点</th>
+        </tr>
+        <tbody id="table-body">
+
+        </tbody>
+    </table>
+</div>
+<script type="text/javascript">
+
+    function build() {
+        // 请求数据
+        $.ajax({
+            type: 'post',   // 请求类型
+            url: 'http://localhost:8080/server/unti_knowledge_point',  // 请求地址
+            dataType: "text",        // 返回值的数据类型，text表示纯文本
+            success: function (data) {     // 访问成功的回调函数，成功后会执行此函数
+                // 把data转成json
+                data = JSON.parse(data);
+                buildTable(data);
+            },
+            error: function(data) {    // 访问错误的处理
+                //alert(data);
+            }
+        });
+    }
+
+
+    //在线查询知识点
+
+
+
+    function checkNote() {                    ///course
+        // 请求课程数据
+        $.ajax({
+            type: 'post',   // 请求类型
+            url: 'http://localhost:8080/server/unti_knowledge_point',  // 请求地址
+            dataType: "text",        // 返回值的数据类型，text表示纯文本
+            data: {// 请求的参数，通过组件的id获取到它的值
+                unitname: $("#unitname").val(),
+            },
+            success: function (data) {     // 访问成功的回调函数，成功后会执行此函数
+                // 把data转成json
+                console.log(data);
+                data = JSON.parse(data);
+                buildcourseTable(data);
+            },
+            error: function(data) {    // 访问错误的处理
+                //alert(data);
+            }
+        });
+    }
+    //滚动创建课程公告表格
+    function buildcourseTable(data) {
+        var html = "";
+        for (var i = 0; i < data.length;i++){
+            html += "<tr class='row'>" +
+                "<td >"+data[i].unitname+"</td>" +
+                "<td >"+data[i].knowpoint+"</td>" +
+                "</tr>" ;
+        }
+        // $("#content").empty();
+        $("#table-body").append(html);
+    }
+    </script>
+
+<div>
+    <div class="login-form">
+
+        <form action="http://localhost:8080/server/unti_knowledge_point" method="post">
+            <div class="form-group input">
+                <label for="unitname">知识点查询</label>
+                <input type="text" class="form-control" name="unitname" id="unitname" placeholder="请输入知识点所在单元全称">
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<button style="width: 280px;margin-left: 40%;  color: red;background-color: aqua" type="button" class="btn btn-success" onclick="checkNote()">查询知识点</button>
+</body>
+</html>

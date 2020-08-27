@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>学生</title>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <style type="text/css">
+        .body {
+
+            color: red;
+        }
+    </style>
+</head>
+<body >
+<div class="body">
+    同学，欢迎使用
+    <span class="label label-primary">学生</span>
+    <button class="btn btn-primary" type="button">
+        新消息 <span class="badge">4</span>
+    </button>
+</div>
+<h4>单元学习</h4>
+
+
+
+
+    <button style="width: 280px;margin-left: 40%;" type="button" class="btn btn-success" onclick="build()">显示学生数据</button>
+    <div >
+        <table id="table"  class="table table-hover" >
+            <tr class="row" >
+                <th >id</th>
+                <th >姓名</th>
+                <th >作业情况</th>
+                <th >班级</th>
+                <th >性别</th>
+                <th >电话号码</th>
+                <th >学号</th>
+            </tr>
+            <tbody id="table-body">
+
+            </tbody>
+        </table>
+    </div>
+        <script type="text/javascript">
+
+            function buildTable(data) {
+                var html = "";
+                for (var i = 0; i < data.length;i++){
+                    html += "<tr class='row'>" +
+                        "<td >"+data[i].id+"</td>" +
+                        "<td >"+data[i].name+"</td>" +
+                        "<td >"+data[i].homework+"</td>" +
+                        "<td >"+data[i].course+"</td>" +
+                        "<td >"+data[i].sex+"</td>" +
+                        "<td >"+data[i].phonenumber+"</td>" +
+                        "<td >"+data[i].xuehao+"</td>" +
+                        "</tr>" ;
+                }
+                // $("#content").empty();
+                $("#table-body").append(html);
+            }
+
+            function build() {
+                // 请求数据
+                $.ajax({
+                    type: 'get',   // 请求类型
+                    url: 'http://localhost:8080/server/login',  // 请求地址
+                    dataType: "text",        // 返回值的数据类型，text表示纯文本
+                    success: function (data) {     // 访问成功的回调函数，成功后会执行此函数
+                        // 把data转成json
+                        console.log(data);
+                        data = JSON.parse(data);
+                        buildTable(data);
+                    },
+                    error: function(data) {    // 访问错误的处理
+                        //alert(data);
+                    }
+                });
+            }
+
+
+            //查询课程公考
+            function checkNote() {                    ///course
+                // 请求课程数据
+                $.ajax({
+                    type: 'get',   // 请求类型
+                    url: 'http://localhost:8080/server/course',  // 请求地址
+                    dataType: "text",        // 返回值的数据类型，text表示纯文本
+                    success: function (data) {     // 访问成功的回调函数，成功后会执行此函数
+                        // 把data转成json
+                        console.log(data);
+                        data = JSON.parse(data);
+                        buildcourseTable(data);
+                    },
+                    error: function(data) {    // 访问错误的处理
+                        //alert(data);
+                    }
+                });
+            }
+            //滚动创建课程公告表格
+            function buildcourseTable(data) {
+                var html = "";
+                for (var i = 0; i < data.length;i++){
+                    html += "<tr class='row'>" +
+                        "<td >"+data[i].name+"</td>" +
+                        "<td >"+data[i].notice+"</td>" +
+                        "</tr>" ;
+                }
+                // $("#content").empty();
+                $("#coursetable-body").append(html);
+            }
+
+
+
+
+            function turn_to_unit() {
+                // 发送ajax请求，也就是get或post请求，相当于在浏览器里输入url访问
+                $.ajax({
+                    type: 'post',   // 请求类型
+                    url: 'http://localhost:8080/server/adminner_operate_tea',  // 请求地址
+                    /*data: {
+                        username: $("#pname").val(),     // 请求的参数，通过组件的id获取到它的值
+                        psd: $("#ppsd").val(),
+                        user: $("input[name='user']:checked").val(),
+                    },
+                    dataType: "text",   */     // 返回值的数据类型，text表示纯文本
+                    success: function (data) {     // 访问成功的回调函数，成功后会执行此函数
+                        document.location = 'stu_file.html';   // 登陆成功，跳转到学生界面
+
+                    },
+                    error: function(data) {    // 访问错误的处理
+                        alert(data);
+                    }
+                });
+            }
+
+            function turn_to_knowpoint() {
+                // 发送ajax请求，也就是get或post请求，相当于在浏览器里输入url访问
+                $.ajax({
+                    type: 'post',   // 请求类型
+                    url: 'http://localhost:8080/server/adminner_operate_tea',  // 请求地址
+                    /*data: {
+                        username: $("#pname").val(),     // 请求的参数，通过组件的id获取到它的值
+                        psd: $("#ppsd").val(),
+                        user: $("input[name='user']:checked").val(),
+                    },
+                    dataType: "text",   */     // 返回值的数据类型，text表示纯文本
+                    success: function (data) {     // 访问成功的回调函数，成功后会执行此函数
+                        document.location = 'manager_creat_course.html';   // 登陆成功，跳转到学生界面
+
+                    },
+                    error: function(data) {    // 访问错误的处理
+                        alert(data);
+                    }
+                });
+            }
+
+        </script>
+    <button style="width: 280px;margin-left: 40%;" type="button" class="btn btn-success" onclick="checkNote()">查询课程公告</button>
+
+    <div >
+        <table id="coursetable" class="table table-hover" >
+            <tr class="row" >
+
+                <th >课程名</th>
+                <th >课程公告</th>
+            </tr>
+            <tbody id="coursetable-body">
+
+            </tbody>
+        </table>
+    </div>
+
+<button style="width: 280px;margin-left: 40%;" type="button" class="btn btn-success" onclick="turn_to_unit()">上传下载资源文件</button>
+<button style="width: 280px;margin-left: 40%;" type="button" class="btn btn-success" onclick="turn_to_knowpoint()">查看课程</button>
+</body>
+</html>

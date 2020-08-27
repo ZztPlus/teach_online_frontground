@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>学生单元学习</title>
+
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+</head>
+<body>
+
+<div >
+    <table id="table1" class="table table-hover" >
+        <tbody id="table-body1">
+
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<script type="text/javascript">
+    function buildTable(data) {
+        console.log(data);
+        var div1 = "<div class=\"panel-group\" id=\"accordion\" role=\"tablist\" aria-multiselectable=\"true\" style=\"width: 400px\">";
+        for (var i = 0; i < data.length;i++){
+            var hzt_666 = "heading" + i;
+            var zhk_666 = "collapse"+ i;
+            if (i != 0){
+                var div2 = "<div class=\"panel panel-default\"><div class=\"panel-heading\" role=\"tab\" id=\"" + hzt_666 + "\"><h4 class=\"panel-title\"><a class=\"collapsed\" role=\"button\" data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#" + zhk_666 + "\" aria-expanded=\"false\" aria-controls=\"" + zhk_666 + "\">"
+                var a = data[i].unitname +"</a></h4></div>"
+                var b = "<div id=\"" + zhk_666 + "\" class=\"panel-collapse collapse\" role=\"tabpanel\" aria-labelledby=\"" + hzt_666 + "\"><div class=\"panel-body\"><div class=\"row\"><button class=\"col-md-4 btn btn-default\"><span class=\"glyphicon glyphicon-arrow-down\" aria-hidden=\"true\">下载作业</span></button></div>"
+                var c = "<div class=\"row\"><button class=\"col-md-4 btn btn-default\"><span class=\"glyphicon glyphicon-eye-open\" aria-hidden=\"true\">查询作业</span></button></div>"
+                var d = "<div class=\"row\"><button class=\"col-md-4 btn btn-default\"><span class=\"glyphicon glyphicon-eye-open\" aria-hidden=\"true\">上传作业文件</span></button></div>"
+                var e = "<div class=\"row\"><button class=\"col-md-4 btn btn-default\"><span class=\"glyphicon glyphicon-pencil\" aria-hidden=\"true\">在线写作业</span></button></div></div></div></div>"
+            }
+            var div2 = "<div class=\"panel panel-default\"><div class=\"panel-heading\" role=\"tab\" id=\"" + hzt_666 + "\"><h4 class=\"panel-title\"><a role=\"button\" data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#" + zhk_666 + "\" aria-expanded=\"true\" aria-controls=\"" + zhk_666 + "\">"
+            var a = data[i].unitname + "</a></h4></div>"
+            var b = "<div id=\"" + zhk_666 + "\" class=\"panel-collapse collapse in\" role=\"tabpanel\" aria-labelledby=\"" + hzt_666 + "\"><div class=\"panel-body\"><div class=\"row\"><a  class=\"col-md-4 btn btn-default\" href=\"stu_file.html\"><span class=\"glyphicon glyphicon-arrow-down\" aria-hidden=\"true\" >下载作业</span></a></div>"
+            var c = "<div class=\"row\"><a class=\"col-md-4 btn btn-default\" href=\"stu_file.html\"><span class=\"glyphicon glyphicon-eye-open\" aria-hidden=\"true\">查询作业</span></a></div>"
+            var d ="<div class=\"row\"><a class=\"col-md-4 btn btn-default\" href=\"stu_file.html\"><span class=\"glyphicon glyphicon-eye-open\" aria-hidden=\"true\">上传作业文件</span></a></div>"
+            var e = "<div class=\"row\"><a class=\"col-md-4 btn btn-default\" href=\"online_homework.html\"><span class=\"glyphicon glyphicon-pencil\" aria-hidden=\"true\">在线写作业</span></a></div></div></div></div>"
+
+            var f = "</div></div>";
+            div1 = div1 + div2 + a + b + c + d + e + f;
+        }
+
+        div1 += "</div>";
+        $("#table-body1").append(div1);
+    }
+
+    function build() {
+        // 请求数据
+        $.ajax({
+            type: 'get',   // 请求类型
+            url: 'http://localhost:8080/server/unit_study_tea',  // 请求地址
+            dataType: "text",        // 返回值的数据类型，text表示纯文本
+            success: function (data) {     // 访问成功的回调函数，成功后会执行此函数
+                // 把data转成json
+                data = JSON.parse(data);
+                buildTable(data);
+            },
+            error: function(data) {    // 访问错误的处理
+                //alert(data);
+            }
+        });
+    }
+
+
+//在线查询知识点
+
+
+
+
+</script>
+<button style="width: 280px;margin-left: 40%;" type="button" class="btn btn-success" onclick="build()">查看单元学习</button>
+
+
+
+<!--<div>-->
+<!--    <div class="login-form">-->
+
+<!--        <form action="http://localhost:8080/server/unti_knowledge_point" method="post">-->
+<!--            <div class="form-group input">-->
+<!--                <label for="unitname">知识点查询</label>-->
+<!--                <input type="text" class="form-control" name="unitname" id="unitname" placeholder="请输入知识点所在单元全称">-->
+<!--            </div>-->
+<!--        </form>-->
+<!--    </div>-->
+<!--</div>-->
+
+
+
+<!--<button style="width: 280px;margin-left: 40%;  color: red;background-color: aqua" type="button" class="btn btn-success" onclick="checkNote()">查询知识点</button>-->
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

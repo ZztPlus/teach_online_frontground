@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>课程查询和修改</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <style>
+        .body {
+            background-image: url("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1596734377987&di=5de7bd0b91e9366fb2143988c7a8c800&imgtype=0&src=http%3A%2F%2Fb.hiphotos.baidu.com%2Fzhidao%2Fpic%2Fitem%2F8b82b9014a90f6030add233a3b12b31bb051ed5a.jpg");
+            color: red;
+        }
+    </style>
+
+</head>
+<body>
+<button style="width: 280px;margin-left: 40%;" type="button" class="btn btn-success" onclick="build()">显示教师数据</button>
+<div >
+    <table id="table" class="table table-hover" >
+        <tr class="row" >
+            <th >老师工号</th>
+            <th >课程名字</th>
+            <th >课程id</th>
+            <th >教师名字</th>
+        </tr>
+        <tbody id="table-body">
+
+        </tbody>
+    </table>
+</div>
+
+<script type="text/javascript">
+
+    function buildTable(data) {
+        var html = "";
+        for (var i = 0; i < data.length;i++){
+            html += "<tr class='row'>" +
+                "<td >"+data[i].gonghao+"</td>" +
+                "<td >"+data[i].course_name+"</td>" +
+                "<td >"+data[i].course_id+"</td>" +
+                "<td >"+data[i].teacher_name+"</td>" +
+                "</tr>" ;
+        }
+        // $("#content").empty();
+        $("#table-body").append(html);
+    }
+
+    function build() {
+        // 请求数据
+        $.ajax({
+            type: 'post',   // 请求类型
+            url: 'http://localhost:8080/server/manage_selupdate',  // 请求地址
+            dataType: "text",        // 返回值的数据类型，text表示纯文本
+            success: function (data) {     // 访问成功的回调函数，成功后会执行此函数
+                // 把data转成json
+                data = JSON.parse(data);
+                buildTable(data);
+            },
+            error: function(data) {    // 访问错误的处理
+                //alert(data);
+            }
+        });
+    }
+
+    function update_manager() {
+        // 发送ajax请求，也就是get或post请求，相当于在浏览器里输入url访问
+        $.ajax({
+            type: 'get',   // 请求类型
+            url: 'http://localhost:8080/server/manage_selupdate',  // 请求地址
+            data: {
+                pgonghao: $("#pgonghao").val(),     // 请求的参数，通过组件的id获取到它的值
+                pcoursename: $("#pcoursename").val(),
+                pcourseid: $("#pcourseid").val(),
+                pteachername: $("#pteachername").val(),
+            },
+            dataType: "text",        // 返回值的数据类型，text表示纯文本
+            success: function (data) {     // 访问成功的回调函数，成功后会执行此函数
+                if('课程信息修改成功，请及时通知!' !== data) {
+                    //alert(data);
+                    alert("课程信息修改失败，请检数据是否合法");
+                } else {
+                    alert(data);
+                }
+            },
+            error: function(data) {    // 访问错误的处理
+                alert(data);
+            }
+        });
+    }
+</script>
+<div>
+    <div class="login-form">
+
+        <form action="http://localhost:8080/server/manage_selupdate" method="get">
+            <div class="form-group input">
+                <label for="pgonghao">新课程负责老师工号</label>
+                <input type="text" class="form-control" name="pname" id="pgonghao" placeholder="新课程负责老师工号">
+            </div>
+            <div class="form-group input">
+                <label for="pcoursename">要修改的课程名称</label>
+                <input type="text" class="form-control" name="ppw" id="pcoursename" placeholder="要修改的课程名称">
+            </div>
+            <div class="form-group input">
+                <label for="pcourseid">新课程id为</label>
+                <input type="text" class="form-control" name="plevel" id="pcourseid" placeholder="新课程id为（可不填，默认分配）">
+            </div>
+            <div class="form-group input">
+                <label for="pteachername">新负责老师名字</label>
+                <input type="text" class="form-control" name="page" id="pteachername" placeholder="新负责老师名字">
+            </div>
+        </form>
+    </div>
+</div>
+<button style="width: 280px;margin-left: 40%;  color: red;background-color: aqua" type="button" class="btn btn-success" onclick="update_manager()">确认修改课程信息</button>
+</body>
+</html>

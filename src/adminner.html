@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>系统管理员工作界面</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <style>
+        .body {
+            color: red;
+        }
+    </style>
+    <script type="text/javascript">
+        //把学生添加到课程中
+        function add_stu() {
+            // 发送ajax请求，也就是get或post请求，相当于在浏览器里输入url访问
+            $.ajax({
+                type: 'post',   // 请求类型
+                url: 'http://localhost:8080/server/adminner',  // 请求地址
+                data: {
+                    pname: $("#pname").val(),     // 请求的参数，通过组件的id获取到它的值
+                    ppassword: $("#ppassword").val(),
+                    pcourse: $("#pcourse").val(),
+                    psex: $("#psex").val(),
+                    pphonenumber: $("#pphonenumber").val(),
+                    pxuehao: $("#pxuehao").val(),
+                },
+                dataType: "text",        // 返回值的数据类型，text表示纯文本
+                success: function (data) {     // 访问成功的回调函数，成功后会执行此函数
+                    if('新学生注册成功，请及时通知学生!' !== data) {
+                        //alert(data);
+                        alert("注册失败，请检查数据完整性！");
+                    } else {
+                        alert(data);
+                    }
+                },
+                error: function(data) {    // 访问错误的处理
+                    alert(data);
+                }
+            });
+
+        }
+
+        //删除学生
+        function del_stu() {
+            // 发送ajax请求，也就是get或post请求，相当于在浏览器里输入url访问
+            $.ajax({
+                type: 'get',   // 请求类型
+                url: 'http://localhost:8080/server/adminner',  // 请求地址
+                data: {// 请求的参数，通过组件的id获取到它的值
+                    ppxuehao: $("#ppxuehao").val(),
+                },
+                dataType: "text",        // 返回值的数据类型，text表示纯文本
+                success: function (data) {     // 访问成功的回调函数，成功后会执行此函数
+                    if('学生已删除！' !== data) {
+                        //alert(data);
+                        alert("学生未删除，请检查学号姓名后重试");
+                    } else {
+                        alert(data);
+                    }
+                },
+                error: function(data) {    // 访问错误的处理
+                    alert(data);
+                }
+            });
+        }
+
+        function turn_to_adminner_operate() {
+            // 发送ajax请求，也就是get或post请求，相当于在浏览器里输入url访问
+            $.ajax({
+                type: 'post',   // 请求类型
+                url: 'http://localhost:8080/server/adminner',  // 请求地址
+                /*data: {
+                    username: $("#pname").val(),     // 请求的参数，通过组件的id获取到它的值
+                    psd: $("#ppsd").val(),
+                    user: $("input[name='user']:checked").val(),
+                },
+                dataType: "text",   */     // 返回值的数据类型，text表示纯文本
+                success: function (data) {     // 访问成功的回调函数，成功后会执行此函数
+                    document.location = 'adminner_operate.html';   // 登陆成功，跳转到学生界面
+
+                },
+                error: function(data) {    // 访问错误的处理
+                    alert(data);
+                }
+            });
+        }
+
+        function turn_to_adminner_operate_tea() {
+            // 发送ajax请求，也就是get或post请求，相当于在浏览器里输入url访问
+            $.ajax({
+                type: 'post',   // 请求类型
+                url: 'http://localhost:8080/server/adminner',  // 请求地址
+                /*data: {
+                    username: $("#pname").val(),     // 请求的参数，通过组件的id获取到它的值
+                    psd: $("#ppsd").val(),
+                    user: $("input[name='user']:checked").val(),
+                },
+                dataType: "text",   */     // 返回值的数据类型，text表示纯文本
+                success: function (data) {     // 访问成功的回调函数，成功后会执行此函数
+                    document.location = 'adminner_operate_tea.html';   // 登陆成功，跳转到学生界面
+
+                },
+                error: function(data) {    // 访问错误的处理
+                    alert(data);
+                }
+            });
+        }
+
+        function turn_to_adminner_operate_manager() {
+            // 发送ajax请求，也就是get或post请求，相当于在浏览器里输入url访问
+            $.ajax({
+                type: 'post',   // 请求类型
+                url: 'http://localhost:8080/server/adminner',  // 请求地址
+                /*data: {
+                    username: $("#pname").val(),     // 请求的参数，通过组件的id获取到它的值
+                    psd: $("#ppsd").val(),
+                    user: $("input[name='user']:checked").val(),
+                },
+                dataType: "text",   */     // 返回值的数据类型，text表示纯文本
+                success: function (data) {     // 访问成功的回调函数，成功后会执行此函数
+                    document.location = 'adminner_operate_manager.html';   // 登陆成功，跳转到学生界面
+
+                },
+                error: function(data) {    // 访问错误的处理
+                    alert(data);
+                }
+            });
+        }
+        </script>
+</head>
+<body >
+<body >
+<div class="body">
+    系统管理员
+    <span class="label label-primary">管理员</span>
+    <button class="btn btn-primary" type="button">
+        新消息 <span class="badge">4</span>
+    </button>
+</div>
+
+<div>
+    <div class="login-form">
+
+        <form action="http://localhost:8080/server/adminner" method="post">
+            <div class="form-group input">
+                <label for="pname">学生姓名</label>
+                <input type="text" class="form-control" name="pname" id="pname" placeholder="学生姓名">
+            </div>
+            <div class="form-group input">
+                <label for="ppassword">登陆密码</label>
+                <input type="text" class="form-control" name="ppassword" id="ppassword" placeholder="登陆密码">
+            </div>
+            <div class="form-group input">
+                <label for="pcourse">学生班级</label>
+                <input type="text" class="form-control" name="pcourse" id="pcourse" placeholder="学生班级">
+            </div>
+            <div class="form-group input">
+                <label for="psex">学生性别</label>
+                <input type="text" class="form-control" name="psex" id="psex" placeholder="学生性别">
+            </div>
+            <div class="form-group input">
+                <label for="pphonenumber">学生电话</label>
+                <input type="text" class="form-control" name="pphonenumber" id="pphonenumber" placeholder="学生电话">
+            </div>
+            <div class="form-group input">
+                <label for="pxuehao">学生学号</label>
+                <input type="text" class="form-control" name="pxuehao" id="pxuehao" placeholder="学生学号">
+            </div>
+        </form>
+    </div>
+</div>
+<button style="width: 280px;margin-left: 40%;  color: red;background-color: aqua" type="button" class="btn btn-success" onclick="add_stu()">注册学生</button>
+<div class="form-group input">
+    <label for="ppxuehao">被删除学生学号</label>
+    <input type="text" class="form-control" name="ppxuehao" id="ppxuehao" placeholder="被删除学生学号">
+</div>
+<button style="width: 280px;margin-left: 40%;  color: red;background-color: aqua" type="button" class="btn btn-success" onclick="del_stu()">删除该学生</button>
+<button style="width: 280px;margin-left: 40%;  color: red;background-color: aqua" type="button" class="btn btn-success" onclick="turn_to_adminner_operate()">修改或查询学生</button>
+<button style="width: 280px;margin-left: 40%;  color: red;background-color: aqua" type="button" class="btn btn-success" onclick="turn_to_adminner_operate_tea()">操作老师信息</button>
+<button style="width: 280px;margin-left: 40%;  color: red;background-color: aqua" type="button" class="btn btn-success" onclick="turn_to_adminner_operate_manager()">操作教务员信息</button>
+</body>
+</html>

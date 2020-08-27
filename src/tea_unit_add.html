@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>教师添加学习单元</title>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+</head>
+<body>
+
+<script type="text/javascript">
+    function add_unit() {
+        // 发送ajax请求，也就是get或post请求，相当于在浏览器里输入url访问
+        $.ajax({
+            type: 'post',   // 请求类型
+            url: 'http://localhost:8080/server/unit_study_tea',  // 请求地址
+            data: {
+                unitname: $("#unitname").val(),     // 请求的参数，通过组件的id获取到它的值
+                knowpoint: $("#knowpoint").val(),
+                summary: $("#summary").val(),
+                unitid: $("#unitid").val(),
+            },
+            dataType: "text",        // 返回值的数据类型，text表示纯文本
+            success: function (data) {     // 访问成功的回调函数，成功后会执行此函数
+                if('课程单元添加成功!' !== data) {
+                    //alert(data);
+                    alert("课程单元添加失败!");
+                } else {
+                    alert(data);
+                }
+            },
+            error: function(data) {    // 访问错误的处理
+                alert(data);
+            }
+        });
+    }
+</script>
+
+
+
+<div>
+    <div class="login-form">
+
+        <form action="http://localhost:8080/server/adminner_operate_tea_delupdate" method="post">
+            <div class="form-group input">
+                <label for="unitname">单元标题</label>
+                <input type="text" class="form-control" name="pname" id="unitname" placeholder="单元标题">
+            </div>
+            <div class="form-group input">
+                <label for="knowpoint">知识点</label>
+                <input type="text" class="form-control" name="ppw" id="knowpoint" placeholder="知识点">
+            </div>
+            <div class="form-group input">
+                <label for="summary">单元内容简介</label>
+                <input type="text" class="form-control" name="plevel" id="summary" placeholder="单元内容简介">
+            </div>
+            <div class="form-group input">
+                <label for="unitid">请设置不重复的单元编号</label>
+                <input type="text" class="form-control" name="plevel" id="unitid" placeholder="单元id">
+            </div>
+        </form>
+    </div>
+</div>
+<button style="width: 280px;margin-left: 40%;  color: red;background-color: aqua" type="button" class="btn btn-success" onclick="add_unit()">创建学习单元</button>
+</body>
+</html>

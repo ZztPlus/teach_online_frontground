@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加课程学生页面</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <style>
+        .body {
+            background-image: url("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1596734377987&di=5de7bd0b91e9366fb2143988c7a8c800&imgtype=0&src=http%3A%2F%2Fb.hiphotos.baidu.com%2Fzhidao%2Fpic%2Fitem%2F8b82b9014a90f6030add233a3b12b31bb051ed5a.jpg");
+            color: red;
+        }
+    </style>
+    <script type="text/javascript">
+        //把学生添加到课程中
+        function stu_course() {
+            // 发送ajax请求，也就是get或post请求，相当于在浏览器里输入url访问
+            $.ajax({
+                type: 'post',   // 请求类型
+                url: 'http://localhost:8080/server/course_manage',  // 请求地址
+                data: {
+                    pxuehao: $("#pxuehao").val(),     // 请求的参数，通过组件的id获取到它的值
+                    pcourse_name: $("#pcourse_name").val(),
+                    pcourse_id: $("#pcourse_id").val(),
+                    pstudent_name: $("#pstudent_name").val(),
+                },
+                dataType: "text",        // 返回值的数据类型，text表示纯文本
+                success: function (data) {     // 访问成功的回调函数，成功后会执行此函数
+                    if('添加学生成功，请及时发布课程通知！' !== data) {
+                        alert(data);
+                        //alert("账号或密码错误！");
+                    } else {
+                        alert(data);
+                    }
+                },
+                error: function(data) {    // 访问错误的处理
+                    alert(data);
+                }
+            });
+
+        }
+
+        function check_class() {
+            // 请求课程数据
+            $.ajax({
+                type: 'get',   // 请求类型
+                url: 'http://localhost:8080/server/course_manage',  // 请求地址
+                dataType: "text",        // 返回值的数据类型，text表示纯文本
+                success: function (data) {     // 访问成功的回调函数，成功后会执行此函数
+                    // 把data转成json
+                    console.log(data);
+                    data = JSON.parse(data);
+                    buildcourseTable(data);
+                },
+                error: function(data) {    // 访问错误的处理
+                    //alert(data);
+                }
+            });
+        }
+        //滚动创建课程公告表格
+        function buildcourseTable(data) {
+            var html = "";
+            for (var i = 0; i < data.length;i++){
+                html += "<tr class='row'>" +
+                    "<td >"+data[i].name+"</td>" +
+                    "<td >"+data[i].id+"</td>" +
+                    "</tr>" ;
+            }
+            // $("#content").empty();
+            $("#check_coursetable-body").append(html);
+        }
+
+    </script>>
+</head>
+<body >
+
+<div>
+    <div class="login-form">
+        <div class="row" style="width: 100%; margin-bottom: 24px; text-align: center; font-size: 24px;font-weight: bold;">手工添加学生</div>
+        <form action="http://localhost:8080/server/course" method="post">
+            <div class="form-group input">
+                <label for="pxuehao">学生学号</label>
+                <input type="text" class="form-control" name="username" id="pxuehao" placeholder="学生学号">
+            </div>
+            <div class="form-group input">
+                <label for="pcourse_name">课程名称</label>
+                <input type="text" class="form-control" name="pcourse_name" id="pcourse_name" placeholder="课程名称">
+            </div>
+            <div class="form-group input">
+                <label for="pcourse_id">课程id</label>
+                <input type="text" class="form-control" name="pcourse_id" id="pcourse_id" placeholder="课程id">
+            </div>
+            <div class="form-group input">
+                <label for="pstudent_name">学生姓名</label>
+                <input type="text" class="form-control" name="pstudent_name" id="pstudent_name" placeholder="学生姓名">
+            </div>
+        </form>
+    </div>
+</div>
+<button style="width: 280px;margin-left: 40%;  color: red;background-color: aqua" type="button" class="btn btn-success" onclick="stu_course()">添加学生</button>
+
+<table id="table"  class="table table-hover" >
+    <tr class="row" >
+        <th >课程名称</th>
+        <th >课程id</th>
+    </tr>
+    <tbody id="check_coursetable-body">
+
+    </tbody>
+</table>
+<button style="width: 280px;margin-left: 40%;  color: red;background-color: aqua" type="button" class="btn btn-success" onclick="check_class()">查询负责课程</button>
+</div>
+</body>
+</html>

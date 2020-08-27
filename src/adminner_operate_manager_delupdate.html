@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>教务员管理界面</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <style>
+        .body {
+            background-image: url("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1596734377987&di=5de7bd0b91e9366fb2143988c7a8c800&imgtype=0&src=http%3A%2F%2Fb.hiphotos.baidu.com%2Fzhidao%2Fpic%2Fitem%2F8b82b9014a90f6030add233a3b12b31bb051ed5a.jpg");
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<script type="text/javascript">
+    function update_manager() {
+        // 发送ajax请求，也就是get或post请求，相当于在浏览器里输入url访问
+        $.ajax({
+            type: 'post',   // 请求类型
+            url: 'http://localhost:8080/server/adminner_operate_manager_delupdate',  // 请求地址
+            data: {
+                pname: $("#pname").val(),     // 请求的参数，通过组件的id获取到它的值
+                ppw: $("#ppw").val(),
+                plevel: $("#plevel").val(),
+                page: $("#page").val(),
+                psex: $("#psex").val(),
+                pphonenumber: $("#pphonenumber").val(),
+                pgonhao: $("#pgonhao").val(),
+            },
+            dataType: "text",        // 返回值的数据类型，text表示纯文本
+            success: function (data) {     // 访问成功的回调函数，成功后会执行此函数
+                if('教务员信息修改成功，请及时通知!' !== data) {
+                    //alert(data);
+                    alert("教务员修改失败，请检数据是否合法");
+                } else {
+                    alert(data);
+                }
+            },
+            error: function(data) {    // 访问错误的处理
+                alert(data);
+            }
+        });
+    }
+    //删除老师
+    function del_manager() {
+        // 发送ajax请求，也就是get或post请求，相当于在浏览器里输入url访问
+        $.ajax({
+            type: 'get',   // 请求类型
+            url: 'http://localhost:8080/server/adminner_operate_manager_delupdate',  // 请求地址
+            data: {// 请求的参数，通过组件的id获取到它的值
+                pgonghao: $("#pgonghao").val(),
+            },
+            dataType: "text",        // 返回值的数据类型，text表示纯文本
+            success: function (data) {     // 访问成功的回调函数，成功后会执行此函数
+                if('教务员已删除！' !== data) {
+                    //alert(data);
+                    alert("教务员未删除，请确认后重试");
+                } else {
+                    alert(data);
+                }
+            },
+            error: function(data) {    // 访问错误的处理
+                alert(data);
+            }
+        });
+    }
+</script>
+<div>
+    <div class="login-form">
+
+        <form action="http://localhost:8080/server/adminner_operate_manager_delupdate" method="post">
+            <div class="form-group input">
+                <label for="pname">新教务员姓名</label>
+                <input type="text" class="form-control" name="pname" id="pname" placeholder="教务员姓名为">
+            </div>
+            <div class="form-group input">
+                <label for="ppw">新登陆密码</label>
+                <input type="text" class="form-control" name="ppw" id="ppw" placeholder="教务员登陆密码为">
+            </div>
+            <div class="form-group input">
+                <label for="plevel">新教务员级别</label>
+                <input type="text" class="form-control" name="plevel" id="plevel" placeholder="教务员级别为">
+            </div>
+            <div class="form-group input">
+                <label for="page">新教务员年龄</label>
+                <input type="text" class="form-control" name="page" id="page" placeholder="教务员年龄为">
+            </div>
+            <div class="form-group input">
+                <label for="psex">新教务员性别</label>
+                <input type="text" class="form-control" name="psex" id="psex" placeholder="教务员性别为">
+            </div>
+            <div class="form-group input">
+                <label for="pphonenumber">新教务员电话</label>
+                <input type="text" class="form-control" name="pphonenumber" id="pphonenumber" placeholder="教务员电话为">
+            </div>
+            <div class="form-group input">
+                <label for="pgonhao">要修改的教务员工号为</label>
+                <input type="text" class="form-control" name="pgonhao" id="pgonhao" placeholder="教务员工号为">
+            </div>
+        </form>
+    </div>
+</div>
+<button style="width: 280px;margin-left: 40%;  color: red;background-color: aqua" type="button" class="btn btn-success" onclick="update_manager()">确认修改教务员</button>
+<button style="width: 280px;margin-left: 40%;  color: red;background-color: aqua" type="button" class="btn btn-success" onclick="del_manager()">确认删除教务员</button>
+<div class="form-group input">
+    <label for="pgonghao">被删除教务员工号</label>
+    <input type="text" class="form-control" name="pgonghao" id="pgonghao" placeholder="被删除教务员工号">
+</div>
+</body>
+</html>
