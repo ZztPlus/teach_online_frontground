@@ -24,6 +24,8 @@
 
         }
     </style>
+
+<!--    todo  此处已经按照老师的要求，将登陆方式换成了账号-->
     <script type="text/javascript">
         // 声明login()方法，需要使用的按钮调用此方法即可
         function login() {
@@ -37,20 +39,32 @@
                     user: $("input[name='user']:checked").val(),
                 },
                 dataType: "text",        // 返回值的数据类型，text表示纯文本
-                success: function (data) {     // 访问成功的回调函数，成功后会执行此函数
+                success: function (data,) {     // 访问成功的回调函数，成功后会执行此函数
                     if('登陆成功！' !== data) {
                         alert("账号密码或身份错误。请核对后登陆！");
                     } else {
+                        localStorage.setItem("username",$("#pname").val());
+
+
                         if ($("input[name='user']:checked").val() === '学生') {
+                            localStorage.setItem("user",$("input[name='user']:checked").val(),)
                             document.location = 'student.html';   // 登陆成功，跳转到学生界面
+
+
                         } else if ($("input[name='user']:checked").val() === '老师'){
+                            localStorage.setItem("user",$("input[name='user']:checked").val(),)
                             document.location = 'teacher.html';   //登陆成功，跳转到老师界面
+
                         }
                         else if ($("input[name='user']:checked").val() === '管理员'){
+                            localStorage.setItem("user",$("input[name='user']:checked").val(),)
                             document.location = 'adminner.html';   //登陆成功，跳转到系统管理员界面
+
                         }
                         else if ($("input[name='user']:checked").val() === '教务员'){
+                            localStorage.setItem("user",$("input[name='user']:checked").val(),)
                             document.location = 'manager.html';   //登陆成功，跳转到教务管理员界面
+                            localStorage.setItem(id,4)
                         }
                     }
                 },

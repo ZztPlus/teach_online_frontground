@@ -17,12 +17,11 @@
             // 发送ajax请求，也就是get或post请求，相当于在浏览器里输入url访问
             $.ajax({
                 type: 'post',   // 请求类型
-                url: 'http://localhost:8080/server/course_manage',  // 请求地址
+                url: 'http://localhost:8080/server/add_stu_to_course',  // 请求地址
                 data: {
-                    pxuehao: $("#pxuehao").val(),     // 请求的参数，通过组件的id获取到它的值
-                    pcourse_name: $("#pcourse_name").val(),
-                    pcourse_id: $("#pcourse_id").val(),
-                    pstudent_name: $("#pstudent_name").val(),
+                    xuehao: $("#xuehao").val(),   // 请求的参数，通过组件的id获取到它的值
+                    course_name: $("#course_name").val(),
+
                 },
                 dataType: "text",        // 返回值的数据类型，text表示纯文本
                 success: function (data) {     // 访问成功的回调函数，成功后会执行此函数
@@ -41,11 +40,16 @@
         }
 
         function check_class() {
+            var number = localStorage.getItem("username")
             // 请求课程数据
             $.ajax({
                 type: 'get',   // 请求类型
                 url: 'http://localhost:8080/server/course_manage',  // 请求地址
                 dataType: "text",        // 返回值的数据类型，text表示纯文本
+                data: {
+                    number: number,   // 请求的参数，通过组件的id获取到它的值
+
+                },
                 success: function (data) {     // 访问成功的回调函数，成功后会执行此函数
                     // 把data转成json
                     console.log(data);
@@ -77,22 +81,14 @@
 <div>
     <div class="login-form">
         <div class="row" style="width: 100%; margin-bottom: 24px; text-align: center; font-size: 24px;font-weight: bold;">手工添加学生</div>
-        <form action="http://localhost:8080/server/course" method="post">
+        <form action="http://localhost:8080/server/add_stu_to_course" method="post">
             <div class="form-group input">
-                <label for="pxuehao">学生学号</label>
-                <input type="text" class="form-control" name="username" id="pxuehao" placeholder="学生学号">
+                <label for="xuehao">学生姓名</label>
+                <input type="text" class="form-control" name="pstudent_name" id="xuehao" placeholder="学生学号">
             </div>
             <div class="form-group input">
-                <label for="pcourse_name">课程名称</label>
-                <input type="text" class="form-control" name="pcourse_name" id="pcourse_name" placeholder="课程名称">
-            </div>
-            <div class="form-group input">
-                <label for="pcourse_id">课程id</label>
-                <input type="text" class="form-control" name="pcourse_id" id="pcourse_id" placeholder="课程id">
-            </div>
-            <div class="form-group input">
-                <label for="pstudent_name">学生姓名</label>
-                <input type="text" class="form-control" name="pstudent_name" id="pstudent_name" placeholder="学生姓名">
+                <label for="course_name">课程名称</label>
+                <input type="text" class="form-control" name="pcourse_name" id="course_name" placeholder="课程名称">
             </div>
         </form>
     </div>

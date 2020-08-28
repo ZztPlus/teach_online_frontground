@@ -21,6 +21,7 @@
                 knowpoint: $("#knowpoint").val(),
                 summary: $("#summary").val(),
                 unitid: $("#unitid").val(),
+                classname: $("#classname").val(),
             },
             dataType: "text",        // 返回值的数据类型，text表示纯文本
             success: function (data) {     // 访问成功的回调函数，成功后会执行此函数
@@ -28,6 +29,7 @@
                     //alert(data);
                     alert("课程单元添加失败!");
                 } else {
+                    // localStorage.setItem("classname",$("#classname").val(),)          todo 巧妙达到不同课程不同单元学习的秘诀
                     alert(data);
                 }
             },
@@ -59,6 +61,10 @@
             <div class="form-group input">
                 <label for="unitid">请设置不重复的单元编号</label>
                 <input type="text" class="form-control" name="plevel" id="unitid" placeholder="单元id">
+            </div>
+            <div class="form-group input">
+                <label for="classname">请设置该单元学习创建到哪个课程中</label>
+                <input type="text" class="form-control" name="plevel" id="classname" placeholder="该单元所属课程">
             </div>
         </form>
     </div>

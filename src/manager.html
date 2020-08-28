@@ -27,9 +27,9 @@
             type: 'post',   // 请求类型
             url: 'http://localhost:8080/server/manage',  // 请求地址
             data: {
-                pgonghao: $("#pgonghao").val(),     // 请求的参数，通过组件的id获取到它的值
-                pcoursename: $("#pcoursename").val(),
-                pteachername: $("#pteachername").val(),
+                teacherid: $("#teacherid").val(),     // 请求的参数，通过组件的id获取到它的值
+                name: $("#name").val(),
+                teachername: $("#teachername").val(),
             },
             dataType: "text",        // 返回值的数据类型，text表示纯文本
             success: function (data) {     // 访问成功的回调函数，成功后会执行此函数
@@ -86,25 +86,26 @@
     }
 </script>
 <div >
+<!--    todo  这里是第一步，向course中写信息。教师查这个表就行/course  "post"-->
     <div class="login-form">
         <div class="row" style="width: 100%; margin-bottom: 24px; text-align: center; font-size: 24px;font-weight: bold;">课程管理</div>
         <form action="http://localhost:8080/server/course" method="post">
             <div class="form-group input">
-                <label for="pgonghao">教师工号</label>
-                <input type="text" class="form-control" name="username" id="pgonghao" placeholder="教师工号">
+                <label for="teacherid">教师id</label>
+                <input type="text" class="form-control" name="username" id="teacherid" placeholder="务必填写正确">
             </div>
             <div class="form-group input">
-                <label for="pcoursename">课程名</label>
-                <input type="text" class="form-control" name="pteacherid" id="pcoursename" placeholder="课程名">
+                <label for="name">课程名</label>
+                <input type="text" class="form-control" name="pteacherid" id="name" placeholder="课程名">
             </div>
             <div class="form-group input">
-                <label for="pteachername">教师名</label>
-                <input type="text" class="form-control" name="pteacherid" id="pteachername" placeholder="教师名">
+                <label for="teachername">教师名</label>
+                <input type="text" class="form-control" name="teacherid" id="teachername" placeholder="教师名">
             </div>
         </form>
     </div>
 </div>
-<button style="width: 280px;margin-left: 40%;" type="button" class="btn btn-success" onclick="set_course()">新建课程</button>
+<button style="width: 280px;margin-left: 40%;" type="button" class="btn btn-success" onclick="set_course()">给老师发布课程</button>
 <div >
     <div class="login-form">
         <div class="row" style="width: 100%; margin-bottom: 24px; text-align: center; font-size: 24px;font-weight: bold;">课程管理</div>
@@ -118,6 +119,6 @@
 </div>
 <button style="width: 280px;margin-left: 40%;" type="button" class="btn btn-success" onclick="del_course()">删除该课程</button>
 <button style="width: 280px;margin-left: 40%;  color: red;background-color: aqua" type="button" class="btn btn-success" onclick="turn_to_manager_selupdate()">查询或修改任课教师</button>
-
-</body>
+教务员已经能成功为教师分配课程了
+    </body>
 </html>
